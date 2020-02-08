@@ -2,15 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Libraries\Utilities;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
+    private $Utilities = "";
+    /**
+     * SettingsController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware("auth");
+        $this->Utilities = new Utilities();
+    }
+
     public function index()
     {
+        $Buttons = $this->Utilities->acciones();
         $configs = Setting::all();
-        return view('config.index',compact('configs'));
+        return view('config.index',compact('configs','Buttons'));
     }
     public function store(Request $request)
     {

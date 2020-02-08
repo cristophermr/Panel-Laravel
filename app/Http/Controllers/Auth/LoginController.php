@@ -54,7 +54,7 @@ class LoginController extends Controller
         ]);
         if (Auth::attempt(['dni' => $request->dni, 'password' => $request->password, 'lock' => 0]))
         {
-            return redirect()->intended('home');
+            return redirect()->intended('home')->with('alert', 'Bienvendo de nuevo!');
         }
         else
         {

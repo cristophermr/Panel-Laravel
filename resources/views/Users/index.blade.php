@@ -3,10 +3,12 @@
     <!-- Full Table -->
     <div class="block">
         <div class="block-header">
-            <h3 class="block-title">Personal</h3>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Add">
+            <h3 class="block-title">Usuarios del sistema</h3>
+            @can("ver usuarios")
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
                 Añadir
             </button>
+            @endcan
         </div>
         <div class="block-content">
             <div class="table-responsive">
@@ -24,7 +26,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($Docentes as $item)
+                    @foreach($Users as $item)
                         <tr>
                             <td class="text-center">
                                 <img class="img-avatar img-avatar48" src="{{asset('assets/media/avatars/avatar1.jpg')}}"
@@ -50,19 +52,23 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group">
+                                    @can("editar usuarios")
                                     <button type="button" class="btn btn-sm btn-info" data-mytitle="{{$item->name}}"
                                             data-name="{{$item->name}}" data-email="{{$item->email}}"
                                             data-user="{{$item->user}}" data-rol="{{$item->Roles->first()->id}}"
-                                            data-lock="{{$item->lock}}" data-id={{$item->dni}} data-toggle="modal"
+                                            data-lock="{{$item->lock}}" data-id={{$item->id}} data-toggle="modal"
                                             data-target="#edit">
                                         <i class="fa fa-fw fa-pencil-alt"></i>
                                     </button>
+                                    @endcan
+                                    @can("borrar usuarios")
                                     <button type="button" class="btn btn-sm btn-danger"
                                             title="Delete" data-toggle="modal"
                                             data-id={{$item->id}} data-name="{{$item->name}}"
                                             data-target="#delete">
                                         <i class="fa fa-fw fa-times"></i>
                                     </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -73,7 +79,7 @@
         </div>
     </div>
     <!-- END Full Table -->
-    @includeIf('Instructors.modal')
+    @includeIf('vendor.modal',[$Buttons])
 @endsection
 @section('js_after')
     <script src="{{asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
@@ -139,7 +145,7 @@
                 "method": "GET"
             }).done(function (response) {
                 $("#dni").prop('readonly', true);
-                $("#name").val(response.nombre).prop('readonly', true);
+                $("#hname").val(response.nombre).prop('readonly', true);
             });
         });
         $("#provincia").change(function () {

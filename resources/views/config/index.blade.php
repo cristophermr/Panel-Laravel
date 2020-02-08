@@ -4,9 +4,11 @@
     <div class="block">
         <div class="block-header">
             <h3 class="block-title">Parametros del sitio</h3>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Add">
+            @can('agregar parametros')
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
                 Añadir
             </button>
+            @endcan
         </div>
         <div class="block-content">
             <p class="font-size-sm text-muted">
@@ -34,9 +36,11 @@
                     </td>
                     <td class="text-center">
                         <div class="btn-group">
+                            @can("editar parametros")
                             <button type="button" class="btn btn-sm btn-info" data-mytitle="{{$config->name}}" data-key="{{$config->key}}" data-value="{{$config->value}}" data-id={{$config->id}} data-toggle="modal" data-target="#edit">
                                 <i class="fa fa-fw fa-pencil-alt"></i>
                             </button>
+                            @endcan
                         </div>
                     </td>
                 </tr>
@@ -45,7 +49,7 @@
             </table>
         </div>
     </div>
-    @includeIf('config.modal')
+    @includeIf('vendor.modal',[$Buttons])
 @endsection
 @section('js_after')
     <script src="{{asset('js/plugins/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
@@ -65,6 +69,12 @@
     </script>
 
     <script>
+        $('#add').on('show.bs.modal',function (event) {
+            var name = "Agregar Parametro";
+            var modal = $(this);
+            modal.find('.block-header #modal_title').html(name);
+        });
+
         $('#edit').on('show.bs.modal', function (event) {
 
             var button = $(event.relatedTarget)

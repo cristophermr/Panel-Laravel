@@ -4,7 +4,7 @@
 </div>
 <div class="form-group">
     <label for="title">Nombre Completo</label>
-    <input type="text" class="form-control" name="name" id="name">
+    <input type="text" class="form-control" name="name" id="hname">
 </div>
 <div class="form-group">
     <label for="birthday">Fecha Nacimiento</label>

@@ -6,10 +6,12 @@ namespace App\Libraries;
 
 use App\Mail\activation;
 use App\Mail\register;
+use App\Models\Button;
 use App\Models\Error;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 class Utilities
 {
@@ -36,5 +38,11 @@ class Utilities
         $Error->message = $exception->getMessage();
         $Error->line = $exception->getLine();
         $Error->save();
+    }
+    public function acciones()
+    {
+        $route  = substr(Route::currentRouteName(), 0, 5);
+        $Botones = Button::where('route',"like","%$route%")->orderBy('id_action', 'DESC')->get();
+        return $Botones;
     }
 }
